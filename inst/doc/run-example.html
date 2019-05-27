@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Chris Pietras" />
+
+<meta name="date" content="2019-05-24" />
+
+<title>Getting Started with TEMPO</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+
+
+<link href="data:text/css;charset=utf-8,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23header%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%20code%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Getting Started with TEMPO</h1>
+<h4 class="author"><em>Chris Pietras</em></h4>
+<h4 class="date"><em>2019-05-24</em></h4>
+
+
+
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>TEMPO is a pathway-based outlier detection approach for finding pathways showing significant temporal changes in expression patterns (or other real-valued genomic data), where each sample has meta-data corresponding to a temporal variable such as age or time. TEMPO was initially designed to identify functional developmental expression patterns that change in disease states (Pietras, et al., <b>ACM-BCB</b>, 2018).</p>
+<p>TEMPO requires, as input, both a gene expression or other genomic data set with temporal meta-data, and a collection of gene sets, where gene names correspond to the gene names in the expression data set. There should also be phenotypic information about the samples, with some samples designated as controls and others as cases (sometimes called “test” samples below).</p>
+</div>
+<div id="example-data" class="section level2">
+<h2>Example Data</h2>
+<p>Example data is included with the package.</p>
+<p>To get started, type the following commands:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">&quot;tempoR&quot;</span>)
+<span class="kw">data</span>(<span class="st">&quot;dflatExample&quot;</span>)
+<span class="kw">data</span>(<span class="st">&quot;gse32472Example&quot;</span>)</code></pre></div>
+<p>The first line loads the package. The second and third create example data objects. The variable “dflatExample” contains a small gene set collection: specifically, a subset of the Gene Ontology biological process gene sets, augmented with additional annotation around developmental processes for the DFLAT project (Wick, et al., <b>BMC Bioinformatics</b>, Feb 7;15:45, 2014).</p>
+<p>The variable gse32472Example is a TEMPO data object containing a small fraction of published gene expression data from blood of infants born preterm (Pietrzyk, et al., <b>PLoS One</b>, Oct 23;8(10):e78585, 2013). One of the phenotypes of interest is whether the subjects developed bronchopulmonary dysplasia (BPD), a pulmonary complication sometimes resulting from very preterm birth. The full expression data set is available in GEO (<a href="https://www.ncbi.nlm.nih.gov/gds" class="uri">https://www.ncbi.nlm.nih.gov/gds</a>) under accession number GSE32472.</p>
+<p>Each of the example data sets contain data as it would be read in from .gct, .cls, and .gmt files using the “loadCLS”, “loadGMT”, and “loadGCT” functions. The corresponding text files are also distributed with the package, and the example datasets could be created with the following set of commands:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">dflatExample =<span class="st"> </span><span class="kw">loadGMT</span>(<span class="kw">paste0</span>(<span class="kw">path.package</span>(<span class="st">&quot;tempoR&quot;</span>),<span class="st">&quot;/dflatExample.gmt&quot;</span>))
+gse32472Example =<span class="st"> </span><span class="kw">list</span>()
+gse32472Example<span class="op">$</span>data =<span class="st"> </span><span class="kw">loadGCT</span>(<span class="kw">paste0</span>(<span class="kw">path.package</span>(<span class="st">&quot;tempoR&quot;</span>),<span class="st">&quot;/gse32472Example.gct&quot;</span>))
+gse32472Example<span class="op">$</span>age =<span class="st"> </span><span class="kw">loadCLS</span>(<span class="kw">paste0</span>(<span class="kw">path.package</span>(<span class="st">&quot;tempoR&quot;</span>),<span class="st">&quot;/gse32472Example.age.cls&quot;</span>),
+                              <span class="dt">sampleNames=</span><span class="kw">rownames</span>(gse32472Example<span class="op">$</span>data))
+gse32472Example<span class="op">$</span>bpd =<span class="st"> </span><span class="kw">loadCLS</span>(<span class="kw">paste0</span>(<span class="kw">path.package</span>(<span class="st">&quot;tempoR&quot;</span>),<span class="st">&quot;/gse32472Example.phen.cls&quot;</span>),
+                              <span class="dt">sampleNames=</span><span class="kw">rownames</span>(gse32472Example<span class="op">$</span>data))
+
+gse32472Example<span class="op">$</span>ctrl =<span class="st"> </span><span class="kw">names</span>(<span class="kw">which</span>(gse32472Example<span class="op">$</span>bpd<span class="op">==</span><span class="st">&quot;no&quot;</span>))
+gse32472Example<span class="op">$</span>test =<span class="st"> </span><span class="kw">names</span>(<span class="kw">which</span>(gse32472Example<span class="op">$</span>bpd<span class="op">!=</span><span class="st">&quot;no&quot;</span>))</code></pre></div>
+</div>
+<div id="running-tempo" class="section level2">
+<h2>Running TEMPO</h2>
+<p>The core function for running TEMPO is called “tempo.run”. Results are reported for all gene sets meeting the desired significance and TEMPO score cutoffs.</p>
+<p>If the optional “output” argument is included (in the example below it is set to a temporary file, which should be replaced as appropriate), TEMPO produces output files “X.table” and “X.pdf,” where X is the string returned by the tempfile() call. The former is a table (tab-delimited text) of the reported gene sets and characteristics, and the latter contains scatterplots for all reported gene sets. A gene set is reported only if it has a raw p-value no larger than <i>pCutoff</i>, FDR q-value no larger than <i>fdrCutoff</i>, and a p-value associated with the control mean squared error no greater than <i>pMseCutoff</i>.</p>
+<p>For this example, we run only 4 permutations instead of the default 500, and use only 2 CPU cores instead of the default 24. Since the default reporting cutoffs are not meaningful with only 4 permutations, in this example, we report all results by setting all of the p-value, FDR, and MSE p-value cutoffs to 1, 2, and 1 respectively.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results =<span class="st"> </span><span class="kw">tempo.run</span>(<span class="dt">phen=</span>gse32472Example<span class="op">$</span>bpd,
+                    <span class="dt">genesets=</span>dflatExample,
+                    <span class="dt">X=</span>gse32472Example<span class="op">$</span>data,
+                    <span class="dt">Y=</span>gse32472Example<span class="op">$</span>age,
+                    <span class="dt">numPerms=</span><span class="dv">4</span>,
+                    <span class="dt">nCores=</span><span class="dv">2</span>,
+                    <span class="dt">output=</span><span class="kw">tempfile</span>(<span class="dt">tmpdir =</span> <span class="kw">tempdir</span>()),
+                    <span class="dt">pCutoff=</span><span class="dv">1</span>,
+                    <span class="dt">fdrCutoff=</span><span class="dv">2</span>,
+                    <span class="dt">pMseCutoff =</span> <span class="dv">1</span>)</code></pre></div>
+<p>Above, TEMPO assumes the first entry in the list passed the “phen” is a control sample and all other types are test samples. The control and text samples can instead by specified exactly - in this case, the below produces the exact same results as the above:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results =<span class="st"> </span><span class="kw">tempo.run</span>(<span class="dt">ctrl=</span>gse32472Example<span class="op">$</span>ctrl,
+                    <span class="dt">test=</span>gse32472Example<span class="op">$</span>test,
+                    <span class="dt">genesets=</span>dflatExample,
+                    <span class="dt">X=</span>gse32472Example<span class="op">$</span>data,
+                    <span class="dt">Y=</span>gse32472Example<span class="op">$</span>age,
+                    <span class="dt">numPerms=</span><span class="dv">4</span>,
+                    <span class="dt">nCores=</span><span class="dv">42</span>
+                    <span class="dt">output=</span><span class="kw">tempfile</span>(<span class="dt">tmpdir =</span> <span class="kw">tempdir</span>()),
+                    <span class="dt">pCutoff=</span><span class="dv">1</span>,
+                    <span class="dt">fdrCutoff=</span><span class="dv">2</span>,
+                    <span class="dt">pMseCutoff =</span> <span class="dv">1</span>)</code></pre></div>
+</div>
+<div id="viewing-output" class="section level2">
+<h2>Viewing Output</h2>
+<p>Either of the previous commands will generate at .table and .pdf output file, which will look similar to the ones presented here.</p>
+<p>The .table file is a tab delimited text file containing full information for all reported gene sets - which, for the purposes of this example, is all gene sets - ordered by decreasing TEMPO score. <i>ctrlMSE</i> is the mean squared error on the control samples; <i>score</i> refers to the TEMPO score; <i>pMSE</i> is the p-value associated with the control mean squared error; <i>p</i> is the raw p-value associated with the TEMPO score, and <i>BH</i> refers to the Benjamini-Hochberg adjusted false discovery rate associated with the TEMPO score.</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th align="right">ctrlMSE</th>
+<th align="right">score</th>
+<th align="right">pMSE</th>
+<th align="right">p</th>
+<th align="right">BH</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>positive regulation of immunoglobulin production</td>
+<td align="right">1.094505</td>
+<td align="right">7.746663</td>
+<td align="right">0.2</td>
+<td align="right">0.2</td>
+<td align="right">0.4000000</td>
+</tr>
+<tr class="even">
+<td>cochlea development</td>
+<td align="right">1.190724</td>
+<td align="right">7.696235</td>
+<td align="right">0.2</td>
+<td align="right">0.2</td>
+<td align="right">0.4000000</td>
+</tr>
+<tr class="odd">
+<td>regulation of immunoglobulin production</td>
+<td align="right">1.339489</td>
+<td align="right">6.671197</td>
+<td align="right">0.2</td>
+<td align="right">0.2</td>
+<td align="right">0.4000000</td>
+</tr>
+<tr class="even">
+<td>response to cAMP</td>
+<td align="right">1.263533</td>
+<td align="right">6.238600</td>
+<td align="right">0.2</td>
+<td align="right">0.2</td>
+<td align="right">0.4000000</td>
+</tr>
+<tr class="odd">
+<td>cerebral cortex radial glia guided migration</td>
+<td align="right">1.618526</td>
+<td align="right">6.218289</td>
+<td align="right">0.2</td>
+<td align="right">0.2</td>
+<td align="right">0.4000000</td>
+</tr>
+<tr class="even">
+<td>neural crest cell differentiation</td>
+<td align="right">1.747706</td>
+<td align="right">3.569756</td>
+<td align="right">0.4</td>
+<td align="right">0.2</td>
+<td align="right">0.4000000</td>
+</tr>
+<tr class="odd">
+<td>positive regulation of execution phase of apoptosis</td>
+<td align="right">2.270780</td>
+<td align="right">3.446171</td>
+<td align="right">0.6</td>
+<td align="right">0.4</td>
+<td align="right">0.6666667</td>
+</tr>
+<tr class="even">
+<td>prostanoid biosynthetic process</td>
+<td align="right">1.420159</td>
+<td align="right">3.301954</td>
+<td align="right">0.2</td>
+<td align="right">0.2</td>
+<td align="right">0.4000000</td>
+</tr>
+<tr class="odd">
+<td>regulation of endoplasmic reticulum unfolded protein response</td>
+<td align="right">2.091081</td>
+<td align="right">3.168399</td>
+<td align="right">0.4</td>
+<td align="right">0.2</td>
+<td align="right">0.4000000</td>
+</tr>
+<tr class="even">
+<td>cholesterol biosynthetic process</td>
+<td align="right">2.373395</td>
+<td align="right">3.071002</td>
+<td align="right">0.6</td>
+<td align="right">0.2</td>
+<td align="right">0.4000000</td>
+</tr>
+<tr class="odd">
+<td>hormone metabolic process</td>
+<td align="right">1.748454</td>
+<td align="right">2.958436</td>
+<td align="right">0.2</td>
+<td align="right">0.2</td>
+<td align="right">0.4000000</td>
+</tr>
+<tr class="even">
+<td>negative regulation of intrinsic apoptotic signaling pathway in response to DNA damage</td>
+<td align="right">2.602118</td>
+<td align="right">2.886301</td>
+<td align="right">1.0</td>
+<td align="right">0.6</td>
+<td align="right">0.7500000</td>
+</tr>
+<tr class="odd">
+<td>protein targeting to plasma membrane</td>
+<td align="right">2.470136</td>
+<td align="right">2.825820</td>
+<td align="right">0.6</td>
+<td align="right">0.6</td>
+<td align="right">0.7500000</td>
+</tr>
+<tr class="even">
+<td>detection of bacterium</td>
+<td align="right">1.980796</td>
+<td align="right">2.806186</td>
+<td align="right">0.6</td>
+<td align="right">0.6</td>
+<td align="right">0.7500000</td>
+</tr>
+<tr class="odd">
+<td>neural precursor cell proliferation</td>
+<td align="right">1.929966</td>
+<td align="right">2.729198</td>
+<td align="right">0.2</td>
+<td align="right">0.6</td>
+<td align="right">0.7500000</td>
+</tr>
+<tr class="even">
+<td>positive regulation of branching involved in ureteric bud morphogenesis</td>
+<td align="right">2.226511</td>
+<td align="right">2.602062</td>
+<td align="right">0.4</td>
+<td align="right">0.8</td>
+<td align="right">0.8421053</td>
+</tr>
+<tr class="odd">
+<td>pattern recognition receptor signaling pathway</td>
+<td align="right">2.482028</td>
+<td align="right">2.595295</td>
+<td align="right">0.8</td>
+<td align="right">0.4</td>
+<td align="right">0.6666667</td>
+</tr>
+<tr class="even">
+<td>negative regulation of multi-organism process</td>
+<td align="right">2.324547</td>
+<td align="right">2.593924</td>
+<td align="right">0.8</td>
+<td align="right">0.8</td>
+<td align="right">0.8421053</td>
+</tr>
+<tr class="odd">
+<td>histone H3-K9 methylation</td>
+<td align="right">2.164172</td>
+<td align="right">2.562543</td>
+<td align="right">0.8</td>
+<td align="right">0.8</td>
+<td align="right">0.8421053</td>
+</tr>
+<tr class="even">
+<td>regulation of bone remodeling</td>
+<td align="right">2.315838</td>
+<td align="right">2.389398</td>
+<td align="right">0.4</td>
+<td align="right">1.0</td>
+<td align="right">1.0000000</td>
+</tr>
+</tbody>
+</table>
+<p>The .pdf file contains plots for each reported gene set of the actual age for each sample vs. the age predicted by the PLS models inside TEMPO for that gene set. The command “tempo.mkplot” can be used to generate the plot for a specified gene set. “Cochlea development” is a gene set that is significant in the full anaylsis, while “regulation of bone remodeling” is not significant.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tempo.mkplot</span>(results,<span class="st">&quot;cochlea development&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">tempo.mkplot</span>(results,<span class="st">&quot;regulation of bone remodeling&quot;</span>)</code></pre></div>
+<p><img src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="additional-tempo-features" class="section level2">
+<h2>Additional TEMPO features</h2>
+<p>Instead of training and evaluating PLSR models on the control samples in leave-one-out cross-validation, models can instead be trained on a held-out set of training samples and evaluated scores on a separate set of control samples. The below example trains TEMPO models on the first 10 control samples, and calculates TEMPO scores using the second 10 control samples and all test samples:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">results2 =<span class="st"> </span><span class="kw">tempo.run</span>(<span class="dt">train=</span>gse32472Example<span class="op">$</span>ctrl[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>],
+                     <span class="dt">ctrl=</span>gse32472Example<span class="op">$</span>ctrl[<span class="dv">11</span><span class="op">:</span><span class="dv">20</span>],
+                     <span class="dt">test=</span>gse32472Example<span class="op">$</span>test,
+                     <span class="dt">genesets=</span>dflatExample,
+                     <span class="dt">X=</span>gse32472Example<span class="op">$</span>data,
+                     <span class="dt">Y=</span>gse32472Example<span class="op">$</span>age,
+                     <span class="dt">numPerms=</span><span class="dv">4</span>,
+                     <span class="dt">nCores=</span><span class="dv">4</span>)</code></pre></div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
